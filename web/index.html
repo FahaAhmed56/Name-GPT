@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Name GPT – A Tiny Language Model</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>✨ Name GPT</h1>
+    <p>A tiny neural <b>language model</b> built from scratch. Like GPT, it predicts the next token, one letter at a time. Trained on 23,595 real first names, it invents new ones.</p>
+  </header>
+
+  <main>
+    <section class="left">
+      <div class="card controls">
+        <div class="seg" role="radiogroup" aria-label="model">
+          <button class="kind active" data-kind="mlp">🧠 Neural model</button>
+          <button class="kind" data-kind="bigram">🔢 Bigram baseline</button>
+        </div>
+        <label>Creativity (temperature) <output id="tOut">1.0</output>
+          <input type="range" id="temp" min="0.3" max="1.6" step="0.1" value="1.0" />
+          <span class="hint"><span>safe &amp; common</span><span>wild &amp; new</span></span>
+        </label>
+        <label>Starts with <input id="prefix" maxlength="6" placeholder="optional, e.g. fa" /></label>
+        <button id="gen" class="primary">✨ Generate 12 names</button>
+      </div>
+
+      <div class="card">
+        <div class="row-head"><h2>Generated names</h2><span id="novelty"></span></div>
+        <div id="names"></div>
+        <p class="info">✨ = brand-new invention · 📖 = real name in the dataset. Click a name to see how it was made.</p>
+      </div>
+
+      <div class="card">
+        <h2>Is it a name? <small>Type anything and see how name-like the model finds it</small></h2>
+        <input id="tryWord" value="fahad" maxlength="15" />
+        <div id="scoreOut"></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <h2>How "<span id="stepName">…</span>" was generated</h2>
+        <p class="info">At each step the model sees the last 3 letters and gives a probability for every possible next letter. One is picked at random, weighted by those probabilities.</p>
+        <div id="steps"></div>
+      </div>
+      <div class="card stats">
+        <div><small>Test loss: neural</small><strong id="lossMlp"></strong></div>
+        <div><small>Test loss: bigram</small><strong id="lossBi"></strong></div>
+        <div><small>Parameters</small><strong>11,897</strong></div>
+        <div><small>Context</small><strong>3 letters</strong></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="model.js"></script>
+  <script src="names.js"></script>
+  <script src="lm.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
